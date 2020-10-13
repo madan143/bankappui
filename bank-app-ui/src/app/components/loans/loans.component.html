@@ -8,7 +8,7 @@
     </div>
     <div class="row text-white align-items-center text-center h-100">
       <div class="col-md-4 bg-dark p-5 " style="height:130px;">
-        <h1 class="text-white">$ 226500</h1>
+        <h1 class="text-white">{{currOutstandingBalance | currency}}</h1>
       </div>
     </div>
   </div>
@@ -29,33 +29,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th>08/18/2016</th>
-          <td>Home</td>
-          <td>$200000</td>
-          <td>$50000</td>
-          <td>$150000</td>
-        </tr>
-        <tr>
-          <th>06/16/2018</th>
-          <td>Vehicle</td>
-          <td>$40000</td>
-          <td>$10000</td>
-          <td>$30000</td>
-        </tr>
-        <tr>
-          <th>10/14/2019</th>
-          <td>Home</td>
-          <td>$50000</td>
-          <td>$10000</td>
-          <td>$40000</td>
-        </tr>
-        <tr>
-          <th>03/18/2020</th>
-          <td>Personal</td>
-          <td>$10000</td>
-          <td>$3500</td>
-          <td>$6500</td>
+        <tr *ngFor="let loan of loans">
+          <th>{{loan.startDt}}</th>
+          <td>{{loan.loanType}}</td>
+          <td>{{loan.totalLoan | currency}}</td>
+          <td>{{loan.amountPaid | currency}}</td>
+          <td>{{loan.outstandingAmount | currency}}</td>
         </tr>
       </tbody>
     </table>

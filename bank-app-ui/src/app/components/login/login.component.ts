@@ -11,29 +11,39 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  authStatus : string;
+  authStatus: string;
   model = new User();
 
-  constructor(private loginService: LoginService,private router : Router) { }
+  constructor(private loginService: LoginService, private router: Router) {
+
+   }
 
   ngOnInit(): void {
 
   }
 
-  validateUser(loginForm: NgForm){
-      this.loginService.validateLoginDetails(this.model).subscribe(
-        responseData => {
-          if(responseData as any && (responseData as any).status){
-            this.model.statusCd = (responseData as any).status;
-          }else{
-            this.loginService.updateLogin('AUTH');
-            this.router.navigateByUrl('/header', { skipLocationChange: true });
-            this.router.navigate(['/inquiry']);
-          }
-        },error => {
-          this.model.statusCd = (error as any).status;
-        });
+  validateUser(loginForm: NgForm) {
+    this.loginService.validateLoginDetails(this.model).subscribe(
+      responseData => {
+        let xsrf = this.getCookie('XSRF-TOKEN');
+        window.sessionStorage.setItem("XSRF-TOKEN",xsrf);
+        this.model = <any> responseData.body;
+        this.model.authStatus = 'AUTH';
+        window.sessionStorage.setItem("userdetails",JSON.stringify(this.model));
+        this.router.navigate(['dashboard']);
+      }, error => {
+        console.log(error);
+      });
 
+  }
+
+  getCookie(name) {
+    let cookie = {};
+    document.cookie.split(';').forEach(function(el) {
+      let [k,v] = el.split('=');
+      cookie[k.trim()] = v;
+    })
+    return cookie[name];
   }
 
 

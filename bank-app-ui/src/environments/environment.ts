@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  rooturl : 'http://USHYDMAREDDY2:8080'
+  rooturl : 'http://localhost:8080'
 };
 
 /*

@@ -8,7 +8,7 @@
     </div>
     <div class="row text-white align-items-center text-center h-100">
       <div class="col-md-4 bg-dark p-5 " style="height:130px;">
-        <h1 class="text-white">$ 34800</h1>
+        <h1 class="text-white">{{(transactions && transactions.length>0) ? (transactions[0].closingBalance | currency) : ' '}}</h1>
       </div>
     </div>
   </div>
@@ -29,47 +29,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th>09/22/2020</th>
-          <td>Amazon.com</td>
-          <td>$100</td>
-          <td></td>
-          <td>$34800</td>
-        </tr>
-        <tr>
-          <th>09/21/2020</th>
-          <td>OnlineTransfer</td>
-          <td></td>
-          <td>$200</td>
-          <td>$34900</td>
-        </tr>
-        <tr>
-          <th>09/21/2020</th>
-          <td>Ebay</td>
-          <td>$200</td>
-          <td></td>
-          <td>$34700</td>
-        </tr>
-        <tr>
-          <th>09/20/2020</th>
-          <td>Deposit</td>
-          <td></td>
-          <td>$500</td>
-          <td>$34900</td>
-        </tr>
-        <tr>
-          <th>09/19/2020</th>
-          <td>Uber</td>
-          <td>$100</td>
-          <td></td>
-          <td>$34400</td>
-        </tr>
-        <tr>
-          <th>09/18/2020</th>
-          <td>Starbucks</td>
-          <td>$100</td>
-          <td></td>
-          <td>$34500</td>
+        <tr *ngFor="let transaction of transactions">
+          <th>{{transaction.transactionDt}}</th>
+          <td>{{transaction.transactionSummary}}</td>
+          <td>{{transaction.transactionType=='Withdrawal' ? (transaction.transactionAmt | currency) : ' '}}</td>
+          <td>{{transaction.transactionType=='Deposit' ? (transaction.transactionAmt | currency) : ' '}}</td>
+          <td>{{transaction.closingBalance | currency}}</td>
         </tr>
       </tbody>
     </table>

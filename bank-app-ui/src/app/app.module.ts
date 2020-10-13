@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -14,6 +14,7 @@ import { AccountComponent } from './components/account/account.component';
 import { BalanceComponent } from './components/balance/balance.component';
 import { LoansComponent } from './components/loans/loans.component';
 import { CardsComponent } from './components/cards/cards.component';
+import { XhrInterceptor } from './interceptors/app.request.interceptor';
 
 @NgModule({
   declarations: [
@@ -33,9 +34,19 @@ import { CardsComponent } from './components/cards/cards.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN',
+      headerName: 'X-XSRF-TOKEN',
+    }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass : XhrInterceptor,
+      multi : true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

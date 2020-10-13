@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppConstants } from "../../constants/app.constants";
 import { environment } from '../../../environments/environment';
+import { User } from '../../model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,20 @@ export class DashboardService {
 
   constructor(private http:HttpClient) { }
 
-  getBillDetails(uniqueSerNum : string){
-    return this.http.post(environment.rooturl+AppConstants.DASHBOARD_API_URL,uniqueSerNum);
+  getAccountDetails(user : User){
+    return this.http.post(environment.rooturl + AppConstants.ACCOUNT_API_URL,user,{ observe: 'response',withCredentials: true });
   }
+
+  getAccountTransactions(user : User){
+    return this.http.post(environment.rooturl + AppConstants.BALANCE_API_URL,user,{ observe: 'response',withCredentials: true });
+  }
+
+  getLoansDetails(user : User){
+    return this.http.post(environment.rooturl + AppConstants.LOANS_API_URL,user,{ observe: 'response',withCredentials: true });
+  }
+
+  getCardsDetails(user : User){
+    return this.http.post(environment.rooturl + AppConstants.CARDS_API_URL,user,{ observe: 'response',withCredentials: true });
+  }
+
 }

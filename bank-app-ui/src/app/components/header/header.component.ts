@@ -1,16 +1,24 @@
-import { Component  } from '@angular/core';
-import { LoginService } from 'src/app/services/login/login.service';
+import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/model/user.model';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
-  authState: string = '';
+export class HeaderComponent implements OnInit {
+  
+  user = new User();
 
-  constructor(private loginService: LoginService) {
-     this.authState = loginService.authStatus;
+  constructor() {
+    
+  }
+
+  ngOnInit() {
+    let userDetails = JSON.parse(sessionStorage.getItem('userdetails'));
+    if(userDetails){
+      this.user = JSON.parse(sessionStorage.getItem('userdetails'));
+    }
   }
 
 }

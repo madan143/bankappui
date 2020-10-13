@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/services/login/login.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { User } from 'src/app/model/user.model';
 
 @Component({
   selector: 'app-logout',
@@ -9,14 +10,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./logout.component.css']
 })
 export class LogoutComponent implements OnInit {
-  authStatus : string;
-  subscription: Subscription;
+  
+  constructor(private router : Router) { 
 
-  constructor(private loginService: LoginService,
-    private router : Router) { }
+  }
 
   ngOnInit(): void {
-    this.loginService.updateLogout();
+    window.sessionStorage.setItem("userdetails",JSON.stringify(new User()));
     this.router.navigate(['/login']);
   }
 

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/model/user.model';
+import { DashboardService } from '../../services/dashboard/dashboard.service';
+
 
 @Component({
   selector: 'app-balance',
@@ -7,9 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BalanceComponent implements OnInit {
 
-  constructor() { }
+  user = new User();
+  transactions = new Array();
+
+  constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
+    this.user = JSON.parse(sessionStorage.getItem('userdetails'));
+    if(this.user){
+      this.dashboardService.getAccountTransactions(this.user).subscribe(
+        responseData => {
+        this.transactions = <any> responseData.body;
+        }, error => {
+          console.log(error);
+        });
+    }
   }
 
 }

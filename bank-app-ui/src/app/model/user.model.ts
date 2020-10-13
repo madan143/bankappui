@@ -1,44 +1,28 @@
 
 export class User{
 
-  public userName: string;
-  public customerName: string;
+  public id: number;
+  public name: string;
   public mobileNumber: string;
   public email : string;
-  public confirmEmail : string;
-  public address : string;
-  public password : string;
-  public confirmPassword : string;
-  public hintQuestion : string;
-  public hintAnswer : string;
-  public uniqueServNum: string;
-  public issueCategory: string;
-  public issueSubCategory: string;
-  public uploadDoc: string|any;
+  public password: string;
+  public role : string;
   public statusCd: string;
   public statusMsg : string;
+  public authStatus : string;
 
 
-  constructor(userName?: string, customerName?: string, mobileNumber?: string, email?: string, confirmEmail?:string,
-      address?:string,password?:string,confirmPassword?:string,hintQuestion?:string,hintAnswer?:string,
-      uniqueServNum?:string,issueCategory?: string,issueSubCategory?: string,uploadDoc?: string|any,
-      statusCd?:string,statusMsg?:string){
-        this.userName = userName;
-        this.customerName = customerName;
+  constructor(id?: number,name?: string, mobileNumber?: string, email?: string,  password?: string,role?: string,
+      statusCd?:string,statusMsg?:string, authStatus?:string){
+        this.id = id;
+        this.name = name;
         this.mobileNumber = mobileNumber;
         this.email = email;
-        this.confirmEmail = confirmEmail;
-        this.address = address;
         this.password = password;
-        this.confirmPassword = confirmPassword;
-        this.hintQuestion = hintQuestion;
-        this.hintAnswer = hintAnswer;
-        this.uniqueServNum = uniqueServNum;
-        this.issueCategory = issueCategory;
-        this.issueSubCategory = issueSubCategory;
-        this.uploadDoc = uploadDoc;
+        this.role = role;
         this.statusCd = statusCd;
         this.statusMsg = statusMsg;
+        this.authStatus = authStatus;
   }
 
 }

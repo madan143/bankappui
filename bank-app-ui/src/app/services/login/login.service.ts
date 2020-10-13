@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from "src/app/model/user.model";
 import { Observable, Subject } from 'rxjs';
 import { AppConstants } from 'src/app/constants/app.constants';
@@ -10,25 +10,13 @@ import { environment } from '../../../environments/environment';
 })
 export class LoginService {
 
-  authStatus: string;
-  authVisibilityChange: Subject<string> = new Subject<string>();
-
-  constructor(private http:HttpClient) {
-    this.authVisibilityChange.subscribe((value) => {
-      this.authStatus = value;
-    });
+  constructor(private http: HttpClient) {
+    
   }
 
-  validateLoginDetails(user : User){
-    return this.http.post(environment.rooturl+AppConstants.LOGIN_API_URL,user);
-  }
-
-  updateLogin(message: string) {
-      this.authVisibilityChange.next(message);
-  }
-
-  updateLogout() {
-      this.authVisibilityChange.next();
+  validateLoginDetails(user: User) {
+    window.sessionStorage.setItem("userdetails",JSON.stringify(user));
+    return this.http.get(environment.rooturl + AppConstants.LOGIN_API_URL, { observe: 'response',withCredentials: true });
   }
 
 }
